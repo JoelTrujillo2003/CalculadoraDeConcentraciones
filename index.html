@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+      <title>Calculadora de Concentraciones (Tema 12)</title>
+      <style>
+    /* Estilos básicos inline para una presentación clara */
+    body {
+      font-family: sans-serif;
+    } 
+
+    .container {
+      width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }  
+    
+      #ejemos
+
+    h1 {
+      text-align: start;
+    }
+
+    .input-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .result,
+    .error {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .error {
+      color: red;
+    }
+      .ejemplo-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px; /* Espacio entre tarjetas */
+  .ejemplo .highlight { /* Clase para resaltar la palabra "Ejemplo" */
+            font-weight: bold;
+            color: #007bff; /* Color azul */
+      } 
+
+    }
+    #ejemplos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Dos columnas responsivas */
+            gap: 20px;
+        }
+
+        .ejemplo {
+            background-color: white; /* Fondo blanco */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(1, 37, 33, 0.144);
+        }
+
+        .ejemplo h3 {
+            color: #007bff; /* Color de encabezado azul */
+            margin-top: 0;
+            border-bottom: 2px solid #eee; /* Línea divisoria sutil */
+            padding-bottom: 10px;
+        }
+
+        .ejemplo p {
+            line-height: 1.4;
+        }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+      <div class="container">
+            <h1>Calculadora de Concentraciones (Tema 12)</h1>
+            
+            <div class="input-group">
+                  <label for="unidad">Unidad de Concentración:</label>
+                  <select id="unidad">
+                        <option value="m/m">% m/m (Porcentaje masa/masa)</option>
+                        <option value="m/v">% m/v (Porcentaje masa/volumen)</option>
+                        <option value="v/v">% v/v (Porcentaje volumen/volumen)</option>
+                        <option value="ppm">ppm (Partes por millón)</option>
+                        <option value="M">Molaridad (M)</option>
+                        <option value="N">Normalidad (N)</option>
+                        <option value="X">Fracción molar (X)</option>
+                    </select>
+              </div>
+
+            <div id="input-fields"></div>
+
+            <button id="calcularBtn">Calcular</button>
+
+            <div id="resultado" class="result"></div>
+            <div id="error" class="error"></div>
+        </div>   
+    
+      </div>
+    
+  
+        
+      </div>
+  
+        <div id="ejemplos">
+            <div class="ejemplo" id="ejemplo-m/m">
+                <h3>% m/m</h3>
+                <p>**Ejemplo:** Una solución de 10% m/m de NaCl contiene 10 g de NaCl por cada 100 g de solución. Esto significa que si tienes 100 gramos de la solución, 10 gramos son de sal y 90 gramos son de agua.</p>
+            </div>
+            <div class="ejemplo" id="ejemplo-m/v">
+                <h3>% m/v</h3>
+                <p>**Ejemplo:** Una solución de 5% m/v de glucosa contiene 5 g de glucosa disueltos en cada 100 mL de solución. Esto es común en sueros médicos.</p>
+            </div>
+            <div class="ejemplo" id="ejemplo-v/v">
+                <h3>% v/v</h3>
+                <p>**Ejemplo:** Una botella de vino con 12% v/v de alcohol significa que 12 mL de cada 100 mL del vino son alcohol etílico.</p>
+            </div>
+            <div class="ejemplo" id="ejemplo-ppm">
+                <h3>ppm</h3>
+                <p>**Ejemplo:** Si un análisis de agua indica 5 ppm de cloro, significa que hay 5 mg de cloro por cada kilogramo (o litro) de agua.</p>
+            </div>
+            <div class="ejemplo" id="ejemplo-M">
+                <h3>Molaridad (M)</h3>
+                <p>**Ejemplo:** Una solución 0.5 M de NaOH contiene 0.5 moles de hidróxido de sodio disueltos en cada litro de solución.</p>
+            </div>
+            <div class="ejemplo" id="ejemplo-N">
+                <h3>Normalidad (N)</h3>
+                <p>**Ejemplo:** Una solución 1 N de HCl contiene 1 equivalente de HCl (1 mol de H+) por cada litro de solución.</p>
+            </div>
+            <div class="ejemplo" id="ejemplo-X">
+                <h3>Fracción molar (X)</h3>
+                <p>**Ejemplo:** En una mezcla de 0.4 moles de etanol y 0.6 moles de agua, la fracción molar del etanol es 0.4.</p>
+            </div>
+        </div>
+    </div>
+    
+  <script>
+    const unidadSelect = document.getElementById("unidad");
+    const inputFieldsDiv = document.getElementById("input-fields");
+    const calcularBtn = document.getElementById("calcularBtn");
+    const resultadoDiv = document.getElementById("resultado");
+    const errorDiv = document.getElementById("error");
+
+    unidadSelect.addEventListener("change", actualizarCampos);
+
+    function actualizarCampos() {
+      inputFieldsDiv.innerHTML = "";
+      const unidadSeleccionada = unidadSelect.value;
+
+      const campos = {
+        "m/m": ["Masa del soluto (g)", "Masa de la solución (g)"],
+        "m/v": ["Masa del soluto (g)", "Volumen de la solución (mL)"],
+        "v/v": ["Volumen del soluto (mL)", "Volumen de la solución (mL)"],
+        "ppm": ["Masa del soluto (g)", "Masa de la solución (kg)"],
+        "M": ["Moles de soluto (mol)", "Volumen de la solución (L)"],
+        "N": ["Equivalentes de soluto (Eq)", "Volumen de la solución (L)"],
+        "X": ["Moles del soluto (mol)", "Moles del solvente (mol)"]
+      };
+
+      campos[unidadSeleccionada].forEach(label => {
+        const inputGroup = document.createElement("div");
+        inputGroup.classList.add("input-group");
+
+        const labelElement = document.createElement("label");
+        labelElement.textContent = label;
+        inputGroup.appendChild(labelElement);
+
+        const inputElement = document.createElement("input");
+        inputElement.type = "number";
+        inputGroup.appendChild(inputElement);
+
+        inputFieldsDiv.appendChild(inputGroup);
+      });
+    }
+
+    calcularBtn.addEventListener("click", () => {
+      const unidadSeleccionada = unidadSelect.value;
+      const inputs = inputFieldsDiv.querySelectorAll("input");
+      const valores = Array.from(inputs).map(input => parseFloat(input.value));
+
+      if (valores.some(isNaN) || valores.some(val => val <= 0)) {
+        errorDiv.textContent = "Por favor, ingrese valores numéricos positivos válidos en todos los campos.";
+        resultadoDiv.textContent = "";
+        return;
+      }
+
+      let resultado;
+      switch (unidadSeleccionada) {
+        case "m/m":
+          resultado = (valores[0] / valores[1]) * 100;
+          resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} % m/m`;
+          break;
+        case "m/v":
+          resultado = (valores[0] / valores[1]) * 100;
+          resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} % m/v`;
+          break;
+        case "v/v":
+          resultado = (valores[0] / valores[1]) * 100;
+          resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} % v/v`;
+          break;
+        case "ppm":
+          resultado = (valores[0] / (valores[1] * 1000)) * 1e6;
+          resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} ppm`;
+          break;
+        case "M":
+          resultado = valores[0] / valores[1];
+          resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} M`;
+          break;
+        case "N":
+          resultado = valores[0] / valores[1];
+          resultadoDiv.textContent = `Resultado: ${resultado.toFixed(2)} N`;
+          break;
+        case "X":
+          resultado = valores[0] / valores[1];
+          resultadoDiv.textContent = `Resultado: ${resultado.toFixed(4)}`;
+          break;
+      }
+
+      errorDiv.textContent = "";
+    });
+
+    actualizarCampos();
+  </script>
+</body>
+
+</html>

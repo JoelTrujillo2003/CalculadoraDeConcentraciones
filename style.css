@@ -1,0 +1,98 @@
+body {
+  font-family: 'Roboto', sans-serif; /* Fuente llamativa y moderna */
+  background: linear-gradient(to right, #4158D0, #C850C0, #FFCC70); /* Degradado de colores llamativos */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 15px; /* Bordes más redondeados */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 2.5em; /* Título más grande */
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #2b2b2b; /* Color más oscuro para las etiquetas */
+}
+
+input, select {
+  width: 100%;
+  padding: 12px; /* Relleno más amplio */
+  border: 2px solid #ddd; /* Borde más grueso */
+  border-radius: 8px; /* Bordes más redondeados */
+  box-sizing: border-box;
+  font-size: 1em; /* Tamaño de fuente más grande */
+}
+
+button {
+  background-color: #FF416C; /* Color llamativo para el botón */
+  color: white;
+  padding: 15px 30px; /* Botón más grande */
+  border: none;
+  border-radius: 8px; /* Bordes más redondeados */
+  cursor: pointer;
+  font-size: 1.2em; /* Tamaño de fuente más grande */
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #FF6347; /* Cambio de color al pasar el mouse */
+}
+
+.result {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1.5em; /* Resultado más grande */
+  color: #2ecc71; /* Color verde para el resultado */
+}
+
+.error {
+  margin-top: 10px;
+  text-align: center;
+  color: #e74c3c; /* Color rojo para el error */
+}
+.ejemplo-card h3 {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: #333; /* Color más oscuro para los encabezados */
+}
+
+.ejemplo-card p {
+  color: #555; /* Color de texto ligeramente más oscuro */
+}
+
+.ejemplo-card strong {
+  color: #007bff; /* Color de resalte para palabras clave */
+}
+#ejemplos {
+  position: relative; /* Hacemos que el contenedor sea relativo para posicionar el título dentro de él */
+}
+
+#ejemplos::before { /* Usamos un pseudo-elemento ::before para crear el título */
+  background-color: #fdfdfd;
+  border: 4px solid #ddd;
+  border-radius: 8px;
+  content: "EJEMPLOS";
+  position: absolute;
+  top: -30px; /* Ajusta este valor según el espacio que quieras dejar arriba */
+  left: 20px;
+  font-weight: bold; /* Puedes agregar más estilos aquí si quieres */
+}
